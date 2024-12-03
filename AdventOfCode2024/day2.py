@@ -5,6 +5,9 @@ D = open(infile).read().strip()
 
 
 def is_safe(report):
+    #check if the report is safe
+    #levels must all be increasing or decreasing
+    #any two adjacent levels differ by 1 to 3 inclusive
     diffs = [report[i+1] - report[i] for i in range(len(report) - 1)]
 
     AI = all(1 <= diff <= 3 for diff in diffs)
@@ -13,6 +16,7 @@ def is_safe(report):
     return AI or AD
 
 def is_safe_with_removal(report):
+    #can we make it safe by removing one level
     for i in range(len(report)):
         mod_report = report[:i] + report[i+1:]
         if is_safe(mod_report):
@@ -20,6 +24,7 @@ def is_safe_with_removal(report):
     return False
         
 def count_safe(data):
+    #counts the number of safe reports in input data
     SC = 0
     for line in data:
         report = list(map(int, line.split()))
